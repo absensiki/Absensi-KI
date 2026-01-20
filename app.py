@@ -12,7 +12,22 @@ jam_sekarang = (datetime.datetime.now() + datetime.timedelta(hours=7)).hour
 # GANTI DENGAN DATA ANDA
 LINK_SHEET = "https://docs.google.com/spreadsheets/d/1ATGIL-GD0mQHIFq6ziitTpVk12WUCNyYHMeNswM6ngI/edit?gid=0#gid=0"
 API_IMGBB = "45ef23a8d4da7b8ed4acfea2a00c76a7"
+# Atur zona waktu ke WIB (Tambah 7 jam dari waktu server UTC)
+waktu_wib = datetime.datetime.now() + datetime.timedelta(hours=7)
+jam_sekarang = waktu_wib.hour
 
+# Tentukan sapaan
+if 5 <= jam_sekarang < 11:
+    sapaan = "Selamat Pagi 🌅"
+elif 11 <= jam_sekarang < 15:
+    sapaan = "Selamat Siang ☀️"
+elif 15 <= jam_sekarang < 18:
+    sapaan = "Selamat Sore 🌇"
+else:
+    sapaan = "Selamat Malam 🌙"
+
+st.set_page_config(page_title="Absensi Tim 8", layout="centered")
+st.title(f"📸 {sapaan}") # Judul berubah otomatis
 st.set_page_config(page_title="Absensi Tim 8", layout="centered")
 
 # Daftar Nama
@@ -75,6 +90,7 @@ with tab2:
     st.subheader("Data Absen Terkini")
     rekap = conn.read(spreadsheet=LINK_SHEET)
     st.dataframe(rekap)
+
 
 
 
