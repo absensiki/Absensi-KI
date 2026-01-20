@@ -6,7 +6,7 @@ import requests
 
 # --- 1. KONFIGURASI API ---
 # Masukkan API Key ImgBB Anda di sini
-API_IMGBB = "MASUKKAN_API_KEY_IMGBB_ANDA"
+API_IMGBB = "45ef23a8d4da7b8ed4acfea2a00c76a7"
 
 st.set_page_config(page_title="Absensi Tim KI", layout="centered")
 
@@ -93,3 +93,4 @@ with tab2:
         st.dataframe(data_rekap, use_container_width=True)
     except:
         st.info("Belum ada data absensi.")
+
