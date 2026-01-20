@@ -14,16 +14,16 @@ waktu_wib = datetime.datetime.now() + datetime.timedelta(hours=7)
 jam_angka = waktu_wib.hour
 
 if 5 <= jam_angka < 11:
-    sapaan = "Selamat Pagi 🌅"
+    sapaan = "Halo, Selamat Pagi 🌅"
 elif 11 <= jam_angka < 15:
-    sapaan = "Selamat Siang ☀️"
+    sapaan = "Halo, Selamat Siang ☀️"
 elif 15 <= jam_angka < 18:
-    sapaan = "Selamat Sore 🌇"
+    sapaan = "Halo, Selamat Sore 🌇"
 else:
-    sapaan = "Selamat Malam 🌙"
+    sapaan = "Halo, Selamat Malam 🌙"
 
 st.title(f"📸 {sapaan}")
-st.subheader("Sistem Absensi Foto Real-Time")
+st.subheader("Sistem Absensi Foto KI Satker PPS Banten")
 
 daftar_nama = [
     "Diana Lestari", "Tuhfah Aqdah Agna", "Dini Atsqiani", 
@@ -83,4 +83,5 @@ with tab2:
         st.dataframe(data_rekap, use_container_width=True)
     except:
         st.info("Belum ada data.")
+
 
