@@ -36,7 +36,7 @@ else:
 
 # Tampilkan Judul dengan Sapaan
 st.title(f"📸 {sapaan}")
-st.subheader("Sistem Absensi Foto Real-Time")
+st.subheader("Sistem Absensi Konsultan Individu Dirjen Prasarana Strategis Banten")
 
 tab1, tab2 = st.tabs(["Presensi", "Rekap Data"])
 
@@ -71,5 +71,6 @@ with tab2:
     st.subheader("Data Absen Terkini")
     rekap = conn.read(spreadsheet=LINK_SHEET)
     st.dataframe(rekap)
+
 
 
