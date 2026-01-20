@@ -68,7 +68,7 @@ with tab1:
                     "Tanggal": tgl, 
                     "Jam": jam, 
                     "Foto_Link": link_foto, 
-                    "Preview_Foto": e'=IMAGE("{link_foto}")'
+                    "Preview_Foto": f'=IMAGE("{link_foto}")'
                 }])
 
                 # Gabungkan data (Append)
@@ -84,6 +84,7 @@ with tab2:
     st.subheader("Data Absen Terkini")
     rekap = conn.read()
     st.dataframe(rekap)
+
 
 
 
