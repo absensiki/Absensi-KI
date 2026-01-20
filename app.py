@@ -3,6 +3,8 @@ from streamlit_gsheets import GSheetsConnection
 import pandas as pd
 import datetime
 import requests
+import time
+jam_sekarang = (datetime.datetime.now() + datetime.timedelta(hours=7)).hour
 
 # --- KONFIGURASI ---
 # GANTI DENGAN DATA ANDA
@@ -71,6 +73,7 @@ with tab2:
     st.subheader("Data Absen Terkini")
     rekap = conn.read(spreadsheet=LINK_SHEET)
     st.dataframe(rekap)
+
 
 
 
