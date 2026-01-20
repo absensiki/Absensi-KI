@@ -21,7 +21,22 @@ daftar_nama = [
 # Koneksi GSheets
 conn = st.connection("gsheets", type=GSheetsConnection)
 
-st.title("📸 Absensi Foto Real-Time")
+st.title(# --- LOGIKA SAPAAN DINAMIS ---
+jam_sekarang = datetime.datetime.now().hour
+
+# Tentukan sapaan berdasarkan jam
+if 5 <= jam_sekarang < 11:
+    sapaan = "Selamat Pagi 🌅"
+elif 11 <= jam_sekarang < 15:
+    sapaan = "Selamat Siang ☀️"
+elif 15 <= jam_sekarang < 18:
+    sapaan = "Selamat Sore 🌇"
+else:
+    sapaan = "Selamat Malam 🌙"
+
+# Tampilkan Judul dengan Sapaan
+st.title(f"📸 {sapaan}")
+st.subheader("Sistem Absensi Foto Real-Time"))
 
 tab1, tab2 = st.tabs(["Presensi", "Rekap Data"])
 
@@ -56,3 +71,4 @@ with tab2:
     st.subheader("Data Absen Terkini")
     rekap = conn.read(spreadsheet=LINK_SHEET)
     st.dataframe(rekap)
+
