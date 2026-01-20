@@ -3,7 +3,11 @@ from streamlit_gsheets import GSheetsConnection
 import pandas as pd
 import datetime
 import requests
+# Tambahkan ini di bagian atas dekat import
+import time
 
+# Jika jam di website meleset, kita tambahkan offset 7 jam untuk WIB
+jam_sekarang = (datetime.datetime.now() + datetime.timedelta(hours=7)).hour
 # --- KONFIGURASI ---
 # GANTI DENGAN DATA ANDA
 LINK_SHEET = "https://docs.google.com/spreadsheets/d/1ATGIL-GD0mQHIFq6ziitTpVk12WUCNyYHMeNswM6ngI/edit?gid=0#gid=0"
@@ -71,6 +75,7 @@ with tab2:
     st.subheader("Data Absen Terkini")
     rekap = conn.read(spreadsheet=LINK_SHEET)
     st.dataframe(rekap)
+
 
 
 
