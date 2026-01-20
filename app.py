@@ -5,13 +5,11 @@ import datetime
 import requests
 
 # --- KONFIGURASI ---
-# GANTI DENGAN API KEY IMGBB ANDA
-API_IMGBB = "45ef23a8d4da7b8ed4acfea2a00c76a7"
+API_IMGBB = "MASUKKAN_API_KEY_IMGBB_ANDA"
 
 st.set_page_config(page_title="Absensi Tim KI", layout="centered")
 
-# --- LOGIKA SAPAAN & WAKTU WIB ---
-# Server menggunakan UTC, jadi kita tambah 7 jam untuk Jakarta/WIB
+# --- WAKTU WIB UNTUK JUDUL & INPUT ---
 waktu_wib = datetime.datetime.now() + datetime.timedelta(hours=7)
 jam_angka = waktu_wib.hour
 
@@ -27,64 +25,61 @@ else:
 st.title(f"📸 {sapaan}")
 st.subheader("Sistem Absensi Foto Real-Time")
 
-# Daftar Nama
 daftar_nama = [
     "Diana Lestari", "Tuhfah Aqdah Agna", "Dini Atsqiani", 
     "Leily Chusnul Makrifah", "Mochamad Fajar Elhaitami", 
     "Muhammad Farsya Indrawan", "M. Ridho Anwar", "Bebri Ananda Sinukaban"
 ]
 
-# Koneksi GSheets
 conn = st.connection("gsheets", type=GSheetsConnection)
 
-tab1, tab2 = st.tabs(["Presensi", "Rekap Data"])
+tab1, tab2 = st.tabs(["📍 Presensi", "📊 Rekap Data"])
 
 with tab1:
-    nama = st.selectbox("Pilih Nama", daftar_nama)
+    nama_pilihan = st.selectbox("Pilih Nama Anda", daftar_nama)
     foto = st.camera_input("Ambil Foto Wajah")
 
     if st.button("Kirim Absen"):
-        if foto:
+        if foto is not None:
             with st.spinner("Sedang memproses..."):
                 # 1. Upload ke ImgBB
                 files = {"image": foto.getvalue()}
                 resp = requests.post(f"https://api.imgbb.com/1/upload?key={API_IMGBB}", files=files)
                 link_foto = resp.json()["data"]["url"]
 
-                # 2. Ambil Waktu Saat Ini (WIB)
+                # 2. Ambil Waktu WIB Persis Saat Klik
                 waktu_klik = datetime.datetime.now() + datetime.timedelta(hours=7)
                 tgl = waktu_klik.strftime("%Y-%m-%d")
                 jam = waktu_klik.strftime("%H:%M:%S")
 
-                # 3. Baca Data Lama & Tambah Baris Baru
+                # 3. Baca & Update Data
                 try:
-                    # Baca data dan hapus baris yang benar-benar kosong
-                    df_lama = conn.read().dropna(how="all")
+                    df_lama = conn.read(ttl=0).dropna(how="all")
                 except:
                     df_lama = pd.DataFrame(columns=["Nama", "Tanggal", "Jam", "Foto_Link", "Preview_Foto"])
 
-                # Buat data baru
                 data_baru = pd.DataFrame([{
-                    "Nama": nama, 
-                    "Tanggal": tgl, 
-                    "Jam": jam, 
-                    "Foto_Link": link_foto, 
+                    "Nama": nama_pilihan,
+                    "Tanggal": tgl,
+                    "Jam": jam,
+                    "Foto_Link": link_foto,
                     "Preview_Foto": f'=IMAGE("{link_foto}")'
                 }])
 
-                # Gabungkan agar data baru ada di baris paling bawah
                 df_final = pd.concat([df_lama, data_baru], ignore_index=True)
-
-                # 4. Update ke Google Sheets
                 conn.update(data=df_final)
-                st.success(f"Berhasil Absen, {nama}! Tercatat jam {jam} WIB")
+                
+                # Menghapus cache agar data terbaru langsung muncul di Tab Rekap
+                st.cache_data.clear()
+                st.success(f"✅ Berhasil! {nama_pilihan} tercatat jam {jam} WIB.")
         else:
-            st.error("Ambil foto dulu!")
+            st.warning("Silakan ambil foto terlebih dulu.")
 
 with tab2:
-    st.subheader("Data Rekap")
+    st.subheader("Data Absensi Terkini (WIB)")
+    # Menggunakan ttl=0 agar selalu mengambil data paling baru dari Sheets
     try:
-        rekap = conn.read().dropna(how="all")
-        st.dataframe(rekap)
+        data_rekap = conn.read(ttl=0).dropna(how="all")
+        st.dataframe(data_rekap, use_container_width=True)
     except:
-        st.write("Belum ada data.")
+        st.info("Belum ada data.")
