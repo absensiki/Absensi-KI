@@ -66,7 +66,7 @@ with tab1:
                 df_lama = conn.read(spreadsheet=LINK_SHEET).dropna(how="all")
                 data_baru = pd.DataFrame([{"Nama": nama, "Tanggal": tgl, "Jam": jam, "Foto_Link": link_foto, "Preview_Foto": f'=IMAGE("{link_foto}")'}])
                 df_final = pd.concat([df_lama, data_baru], ignore_index=True)
-                conn.update(spreadsheet=LINK_SHEET, data=df_final)
+                conn.update(data=df_final)
 
                 st.success(f"Berhasil Absen, {nama}!")
         else:
@@ -76,6 +76,7 @@ with tab2:
     st.subheader("Data Absen Terkini")
     rekap = conn.read(spreadsheet=LINK_SHEET)
     st.dataframe(rekap)
+
 
 
 
