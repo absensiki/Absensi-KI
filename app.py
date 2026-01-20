@@ -24,7 +24,7 @@ else:
     sapaan = "Selamat Malam 🌙"
 
 st.title(f"📸 {sapaan}")
-st.subheader("Sistem Absensi Foto Real-Time")
+st.subheader("Sistem Absensi Foto KI Dirjen Prasarana Strategis Banten")
 
 # Daftar Nama
 daftar_nama = [
@@ -84,3 +84,4 @@ with tab2:
     st.subheader("Data Absen Terkini")
     rekap = conn.read()
     st.dataframe(rekap)
+
