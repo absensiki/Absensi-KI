@@ -15,13 +15,13 @@ waktu_wib = datetime.datetime.now() + datetime.timedelta(hours=7)
 jam_sekarang = waktu_wib.hour
 
 if 5 <= jam_sekarang < 11:
-    sapaan = "Selamat Pagi 🌅"
+    sapaan = "Halo, Selamat Pagi 🌅"
 elif 11 <= jam_sekarang < 15:
-    sapaan = "Selamat Siang ☀️"
+    sapaan = "Halo, Selamat Siang ☀️"
 elif 15 <= jam_sekarang < 18:
-    sapaan = "Selamat Sore 🌇"
+    sapaan = "Halo, Selamat Sore 🌇"
 else:
-    sapaan = "Selamat Malam 🌙"
+    sapaan = "Halo, Selamat Malam 🌙"
 
 st.title(f"📸 {sapaan}")
 st.subheader("Sistem Absensi Foto KI Dirjen Prasarana Strategis Banten")
@@ -84,4 +84,5 @@ with tab2:
     st.subheader("Data Absen Terkini")
     rekap = conn.read()
     st.dataframe(rekap)
+
 
