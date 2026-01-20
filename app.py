@@ -26,9 +26,9 @@ elif 15 <= jam_sekarang < 18:
 else:
     sapaan = "Selamat Malam 🌙"
 
-st.set_page_config(page_title="Absensi Tim 8", layout="centered")
+st.set_page_config(page_title="Absensi Tim KI", layout="centered")
 st.title(f"📸 {sapaan}") # Judul berubah otomatis
-st.set_page_config(page_title="Absensi Tim 8", layout="centered")
+st.set_page_config(page_title="Absensi Tim KI", layout="centered")
 
 # Daftar Nama
 daftar_nama = [
@@ -76,6 +76,7 @@ with tab2:
     st.subheader("Data Absen Terkini")
     rekap = conn.read(spreadsheet=LINK_SHEET)
     st.dataframe(rekap)
+
 
 
 
