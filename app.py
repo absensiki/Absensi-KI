@@ -14,7 +14,7 @@ waktu_wib = datetime.datetime.now() + datetime.timedelta(hours=7)
 jam_angka = waktu_wib.hour
 
 if 5 <= jam_angka < 11:
-    sapaan = "Halo, Selamat Pagi begundal 🌅"
+    sapaan = "Halo, Selamat Pagi 🌅"
 elif 11 <= jam_angka < 15:
     sapaan = "Halo, Selamat Siang ☀️"
 elif 15 <= jam_angka < 18:
@@ -83,6 +83,7 @@ with tab2:
         st.dataframe(data_rekap, use_container_width=True)
     except:
         st.info("Belum ada data.")
+
 
 
 
