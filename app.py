@@ -22,7 +22,7 @@ elif 15 <= jam_angka < 18:
 else:
     sapaan = "Halo, Selamat Malam 🌙"
 
-st.title(f" {sapaan}")
+st.title(f"{sapaan}")
 st.subheader("Absensi KI Satker PPS Banten")
 
 daftar_nama = [
@@ -83,6 +83,7 @@ with tab2:
         st.dataframe(data_rekap, use_container_width=True)
     except:
         st.info("Belum ada data.")
+
 
 
 
